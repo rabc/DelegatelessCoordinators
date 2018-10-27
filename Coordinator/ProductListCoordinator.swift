@@ -5,28 +5,16 @@
 
 import UIKit
 
-class ProductListCoordinator: Coordinator {
+class ProductListCoordinator: Coordinator, TabbedCoordinator {
 
-    private var navigationController: UINavigationController?
+    private var navigationController: UINavigationController
 
-    override func start(with completion: @escaping () -> Void = {}) {
+    var tabViewController: UIViewController { return navigationController }
+
+    override init(rootViewController: UIViewController?) {
         let productListViewController = ProductListViewController()
+        self.navigationController = UINavigationController(rootViewController: productListViewController)
 
-        let navigationController = UINavigationController(rootViewController: productListViewController)
-        self.navigationController = navigationController
-
-        if let tabBarController = self.rootViewController as? UITabBarController {
-            if tabBarController.viewControllers == nil {
-                tabBarController.viewControllers = [navigationController]
-            }
-            else {
-                tabBarController.viewControllers?.append(navigationController)
-            }
-        }
-        else {
-            fatalError(String(describing: type(of: self.rootViewController)))
-        }
-
-        super.start(with: completion)
+        super.init(rootViewController: rootViewController)
     }
 }

@@ -17,6 +17,7 @@ class AppCoordinator: Coordinator {
 
     override func start(with completion: @escaping () -> Void = {}) {
 
+        UserDefaults.standard.set("123", forKey: "user")
         if let _ = UserDefaults.standard.string(forKey: "user") {
             let tabBarCoordinator = setupTabCoordinator()
             self.startChild(coordinator: tabBarCoordinator)

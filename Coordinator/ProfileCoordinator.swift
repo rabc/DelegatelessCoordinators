@@ -5,25 +5,14 @@
 
 import UIKit
 
-class ProfileCoordinator: Coordinator {
+class ProfileCoordinator: Coordinator, TabbedCoordinator {
 
-    private var profileViewController: ProfileViewController?
+    private var profileViewController: ProfileViewController
 
-    override func start(with completion: @escaping () -> Void = {}) {
-        let profileViewController = ProfileViewController()
+    var tabViewController: UIViewController { return profileViewController }
 
-        if let tabBarController = self.rootViewController as? UITabBarController {
-            if tabBarController.viewControllers == nil {
-                tabBarController.viewControllers = [profileViewController]
-            }
-            else {
-                tabBarController.viewControllers?.append(profileViewController)
-            }
-        }
-        else {
-            fatalError(String(describing: type(of: self.rootViewController)))
-        }
-
-        super.start(with: completion)
+    override init(rootViewController: UIViewController?) {
+        profileViewController = ProfileViewController()
+        super.init(rootViewController: rootViewController)
     }
 }
